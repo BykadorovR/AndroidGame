@@ -36,7 +36,7 @@ public class Client {
 
 		main = new Thread(new Runnable() {
 			public void run() {
-				String destAddr = "10.0.16.72"; // Destination address
+				String destAddr = "192.168.0.100"; // Destination address
 				int destPort = 80; // Destination ports
 				try {
 					sock = new Socket(destAddr, destPort);
@@ -68,7 +68,6 @@ public class Client {
 								for (int i = 0; i < req.size(); i++) {
 									synchronized (shared) {
 									Player msgTMP = coder.fromWire(req.get(i));
-//									Log.d("myLogs", msgTMP.getCoordFireballX() + " FIREBALL" + msgTMP.getCoordFireballY() + " FIREBALL");
 									players.set(i, msgTMP);
 									if (msgTMP.getExit() == true) {
 											shared.wait();
@@ -110,7 +109,7 @@ public class Client {
 				} // To server
 
 				//Инициализируем сообщение
-				Player toMsg = new Player(100, 100);
+				Player toMsg = new Player(-1000, -1000);
 				toMsg.setID(ID);
 				toMsg.setExit(false);
 				//Отправляем сообщение

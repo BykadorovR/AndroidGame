@@ -12,7 +12,7 @@ public class GameManagment {
 	private final Object object = new Object();
 	private Socket clntSock;
 	private PlayerCoder coder;
-	private Player msg = new Player(100, 100);
+	private Player msg = new Player(500, 100);
 	private Player msgUpdate = null;
 	private int speed = 3;
 	private int lengthFire = 0;
@@ -40,6 +40,10 @@ public class GameManagment {
 					byte[] req;
 					while ((req = framer.nextMsg()) != null) {
 						msgUpdate = coder.fromWire(req);
+						if (msgUpdate.getCoordX() == -1000 && msgUpdate.getCoordY()==-1000) {
+							msgUpdate.setCoordX(msg.getCoordX());
+							msgUpdate.setCoordY(msg.getCoordY());
+						} //TO DO: DO NORMAL METHOD FOR FIRST INITIALIZATION POSITION OF PLAYERS
 						endFireballX = msgUpdate.getCoordFireballX();
 						endFireballY = msgUpdate.getCoordFireballY();
 						

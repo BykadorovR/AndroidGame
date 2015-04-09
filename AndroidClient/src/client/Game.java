@@ -49,7 +49,6 @@ public class Game extends SimpleBaseGameActivity {
 	private RepeatingSpriteBackground mGrassBackground;
 	protected BoundCamera mBoundChaseCamera;
 	Map<String, Integer> forNumberPosition = new HashMap<String, Integer>();
-	private boolean _returnScene = false;
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -57,8 +56,8 @@ public class Game extends SimpleBaseGameActivity {
 		mBoundChaseCamera.setBoundsEnabled(true);
 		mBoundChaseCamera.setBounds(-200, -200, 1400+200, 1200+200);
 		EngineOptions engineOptions = new EngineOptions(true,
-				ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(),
-				mBoundChaseCamera);
+				ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(), mBoundChaseCamera
+				);
 		return engineOptions;
 	}
 
@@ -87,7 +86,22 @@ public class Game extends SimpleBaseGameActivity {
 		final Scene scene = new Scene();
 		client = new Client();
 		client.runThread();
-		scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		
+		//Check max amount players in room (4) while our "player" is not exist
+		//When "player" enter in the room, camera set his center as own center
+		boolean _checkOurEnter = false;
+		
+		while (_checkOurEnter==false) {
+		players = client.getPlayers();
+			for (int i=0; i<4; i++) {
+				if (players.get(i)!=null)
+				if (client.getID().equalsIgnoreCase(players.get(i).getID())) {
+				mBoundChaseCamera.setCenter((float) players.get(i).getCoordX(),(float) players.get(i).getCoordY());
+				_checkOurEnter = true;
+				}
+			}
+		}
+		
 		
 		// ÊÀÑÀÍÈÅ
 		scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
@@ -199,15 +213,15 @@ public class Game extends SimpleBaseGameActivity {
 							}
 						}
 						if (!sprites.containsKey(players.get(i).getID())) {
-							AnimatedSprite sprite = new AnimatedSprite(100, 100, knight,
+							AnimatedSprite sprite = new AnimatedSprite(0,0, knight,
 									getVertexBufferObjectManager());
-							_returnScene = true;
-							sprite.setPosition(sprite.getX() - sprite.getWidth()/2, sprite.getY() - sprite.getHeight()*0.8f);
+							sprite.setPosition((float) players.get(i).getCoordX()- sprite.getWidth()/2, 
+									(float) players.get(i).getCoordY()-sprite.getHeight()*0.8f);
 							sprite.stopAnimation(1);
 							forNumberPosition.put(players.get(i).getID(), 0);
 							sprites.put(players.get(i).getID(), sprite);
 							scene.attachChild(sprite);
-
+							
 						} else if (sprites.containsKey(players.get(i).getID())) {
 							
 							
@@ -221,11 +235,10 @@ public class Game extends SimpleBaseGameActivity {
 								animateSprite(spriteX, sprite.getX(), spriteY, sprite.getY(), sprite, players.get(i).getID());
 							}
 							sprite.setPosition(spriteX, spriteY);
-							
 							if (client.getID().equalsIgnoreCase(players.get(i).getID())) {
-									mBoundChaseCamera.setCenter((float) players.get(i).getCoordX(),(float) players.get(i).getCoordY());
+								mBoundChaseCamera.setCenter((float) players.get(i).getCoordX(),(float) players.get(i).getCoordY());
 							}
-						
+							
 						}
 
 					}
@@ -247,8 +260,6 @@ public class Game extends SimpleBaseGameActivity {
 		
 		hud.attachChild(fireballHUD);
 		mBoundChaseCamera.setHUD(hud);
-		while (_returnScene == false) {
-		}
 		return scene;
 	}
 
