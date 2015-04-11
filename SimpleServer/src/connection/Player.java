@@ -7,7 +7,7 @@ public class Player {
 	private double fireballX = -1;
 	private double fireballY = -1;
 	private boolean heroMove;
-	
+	private int heroHealth;
 	private String ID;
 	private boolean exit;
 	
@@ -76,5 +76,13 @@ public class Player {
 	}
 	public void setMove(boolean move) {
 		heroMove = move;
+	}
+	
+	public void setHealth(int health) {
+		this.heroHealth = health;
+	}
+	
+	public int getHealth() {
+		return heroHealth;
 	}
 }

@@ -49,13 +49,15 @@ public class GameManagment {
 						
 						
 						synchronized (object) {
-						if (msgUpdate.getExit() == true) {
-							msg.setExit(true);
+							//Remove setter for exit flag (in if clause and below it)
+						msg.setExit(msgUpdate.getExit());
+						if (msg.getExit() == true) {
 							System.out.println("Bye-bye");
 							return;
 						}
-						msg.setExit(false);
+						msg.setHealth(msgUpdate.getHealth());
 						msg.setID(msgUpdate.getID());
+						
 						}	
 						double uX;
 						double cX;

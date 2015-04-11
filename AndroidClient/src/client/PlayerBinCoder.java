@@ -27,6 +27,7 @@ public class PlayerBinCoder implements PlayerCoder {
 		
 		out.writeByte(magicAndFlags);
 		out.writeBoolean(msg.getMove());
+		out.writeInt(msg.getHealth());
 		out.writeUTF(msg.getID());
 		out.writeDouble(msg.getCoordX());
 		out.writeDouble(msg.getCoordY());
@@ -53,7 +54,9 @@ public class PlayerBinCoder implements PlayerCoder {
 			exit = ((magic & EXIT_FLAG) != 0);
 		}
 		boolean move = in.readBoolean();
+		int health = in.readInt();
 		String ID = in.readUTF();
+
 		double coordX = in.readDouble();
 		double coordY = in.readDouble();
 		double fireballX = in.readDouble();
@@ -63,10 +66,10 @@ public class PlayerBinCoder implements PlayerCoder {
 		newMsg.setCoordFireballX(fireballX);
 		newMsg.setCoordFireballY(fireballY);	
 		
-		System.out.println(fireballX + " "+ fireballY);
 		newMsg.setExit(exit);
 		newMsg.setID(ID);
 		newMsg.setMove(move);
+		newMsg.setHealth(health);
 		return newMsg;
 
 	}
