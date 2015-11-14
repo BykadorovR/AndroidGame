@@ -11,3 +11,6 @@ https://github.com/nicolasgramlich/AndEngine
 4) Right click on AndroidClient and press properties. Choose Android -> Add -> AndEngine
 5) Go to properties->java build path -> libraries and change wrong andEngine  library
 
+Run build.bat for server
+
+Set IP adress of server (from ipconfig) and start android application
