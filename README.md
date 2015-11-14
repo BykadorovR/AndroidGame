@@ -9,3 +9,5 @@ https://github.com/nicolasgramlich/AndEngine
 2) Download AndEngine
 3) "import" in Eclipse and choose AndroidClient, SimpleServer, AndEngine
 4) Right click on AndroidClient and press properties. Choose Android -> Add -> AndEngine
+5) Go to properties->java build path -> libraries and change wrong andEngine  library
+
