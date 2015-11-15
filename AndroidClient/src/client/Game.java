@@ -25,6 +25,9 @@ import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
+import controller.FactoryController;
+import controller.IWarController;
+import controller.WarController;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -111,42 +114,22 @@ public class Game extends SimpleBaseGameActivity {
 			}
 		}
 		
+		FactoryController fController = new FactoryController();
+		final IWarController warController = fController.createWarController();
+		
 		
 		// КАСАНИЕ
 		scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
 			private float xFromTouch;
 			private float yFromTouch;
-			int fireball = 0;
 			@Override
 			public boolean onSceneTouchEvent(Scene pScene,
 					TouchEvent pSceneTouchEvent) {
-				MotionEvent localMotionEvent = pSceneTouchEvent
-						.getMotionEvent(); // Для простоты обработки
-											// всевозможных касаний
+				MotionEvent localMotionEvent = pSceneTouchEvent.getMotionEvent(); 
 				if (localMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-					
 					xFromTouch = pSceneTouchEvent.getX();
 					yFromTouch = pSceneTouchEvent.getY();
-					
-					try {
-						if (xFromTouch < fireballHUD.getWidth()+mBoundChaseCamera.getCenterX()-mBoundChaseCamera.getWidth()/2 
-								&& yFromTouch < fireballHUD.getHeight()+mBoundChaseCamera.getCenterY()-mBoundChaseCamera.getHeight()/2
-								&& fireballHUD.getCurrentTileIndex() == 0 || fireball == 1) {
-							if (fireball == 1 ) {
-								fireball = 0;
-								
-								client.fireball(xFromTouch, yFromTouch);
-							} else 
-							fireball ++;
-							
-						} else {
-							client.click(xFromTouch, yFromTouch);
-						}
-						
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					warController.controlCastFireball(xFromTouch, yFromTouch, mBoundChaseCamera, fireballHUD, client);
 				}
 				return false;
 			}

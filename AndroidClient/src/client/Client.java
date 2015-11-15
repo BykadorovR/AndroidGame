@@ -36,7 +36,7 @@ public class Client {
 
 		main = new Thread(new Runnable() {
 			public void run() {
-				String destAddr = "192.168.1.6"; // Destination address
+				String destAddr = "192.168.1.2"; // Destination address
 				int destPort = 80; // Destination ports
 				try {
 					sock = new Socket(destAddr, destPort);
@@ -184,6 +184,7 @@ public class Client {
 		});
 		main.start();
 	}
+	
 	//пересылаем данные клика
 	public void click(double x, double y) throws InterruptedException {
 		synchronized (coord) {
