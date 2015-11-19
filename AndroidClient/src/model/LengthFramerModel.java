@@ -1,4 +1,5 @@
-package client;
+package model;
+
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
@@ -6,8 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-
-public class LengthFramer implements Framer {
+public class LengthFramerModel implements IFramerModel {
 	
 	public static final int BYTEMASK = 0xff; //1111 1111
 	public static final int SHORTMASK = 0xffff; //1111 1111 1111 1111
@@ -15,11 +15,11 @@ public class LengthFramer implements Framer {
 	ArrayList<byte[]> msg;
 	private DataInputStream in; // wrapper for data I/O
 
-	public LengthFramer(InputStream in) throws IOException {
+	public LengthFramerModel(InputStream in) throws IOException {
 		this.in = new DataInputStream(in);
 		msg = new ArrayList<byte[]>();
 	}
-
+	@Override
 	public void frameMsg(byte[] message, OutputStream out) throws IOException {
 		
 		out.write(message.length);
@@ -27,7 +27,7 @@ public class LengthFramer implements Framer {
 		out.write(message);
 		out.flush();
 	}
-
+	@Override
 	//Чтобы передать список "игроков"
 	public void frameMsgList(ArrayList<byte[]> message, OutputStream out) throws IOException {
 		out.write(message.size());
@@ -37,7 +37,7 @@ public class LengthFramer implements Framer {
 		}
 		out.flush();
 	}
-	
+	@Override
 	public ArrayList<byte[]> getCountOfMessages () throws IOException {
 		msg.clear();
 		int length=0;
@@ -57,7 +57,7 @@ public class LengthFramer implements Framer {
 
 		return msg;
 	}
-	
+	@Override
 	public byte[] nextMsg() throws IOException {
 		int length;
 		try { 

@@ -1,4 +1,4 @@
-package client;
+package model;
 
 
 import org.andengine.engine.options.resolutionpolicy.BaseResolutionPolicy;

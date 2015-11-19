@@ -1,4 +1,4 @@
-package client;
+package model;
 
 
 public class Player {

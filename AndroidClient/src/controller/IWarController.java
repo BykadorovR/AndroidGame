@@ -1,15 +1,12 @@
 package controller;
 
-import org.andengine.engine.camera.BoundCamera;
-import org.andengine.entity.sprite.TiledSprite;
-
-import client.Client;
-
 public interface IWarController {
 	
-	public void controlCastFireball(float xFromTouch, float yFromTouch, BoundCamera mBoundChaseCamera, TiledSprite fireballHUD, Client client);
+	public void controlHandle(float xFromTouch, float yFromTouch);
 	
-	public void controlMove();
+	public void controlCastFireball(boolean status);
 	
-	public void controlExit();
+	public void controlMove(boolean status);
+	
+
 }

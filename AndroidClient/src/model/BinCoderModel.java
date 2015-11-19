@@ -1,4 +1,4 @@
-package client;
+package model;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,7 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class PlayerBinCoder implements PlayerCoder {
+public class BinCoderModel implements ICoderModel {
+
 
 	// manifest constants for encoding
 	public static final int MAGIC = 0x54; // magic: 0101 01 00
