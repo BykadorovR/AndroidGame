@@ -138,7 +138,7 @@ public class WarView implements IPlayerView {
 	}
 
 	@Override
-	public void detach(ICommunicationModel multiComm) {
+	public int detach(ICommunicationModel multiComm) {
 		ArrayList<Player> players = game.getPlayers();
 		Map<String, AnimatedSprite> fireballs = game.getFireballs();
 		Map<String, AnimatedSprite> sprites = game.getSprites();
@@ -158,11 +158,12 @@ public class WarView implements IPlayerView {
 						sprites.remove(players.get(i).getID());
 						forNumberPositionAnimate.remove(players.get(i).getID());
 						multiComm.getSync().notify();
-						// return;
+						return 1;
 					}
 				}
 			}
 		}
+		return 0;
 	}
 
 	public void animateSprite(float sX, float eX, float sY, float eY,

@@ -186,7 +186,7 @@ public class Game extends SimpleBaseGameActivity {
 				fireballView.animate(fireballHUD, multiComm);
 				fireballView.detach();
 				// =====================player====================
-				warView.detach(multiComm);
+				if (warView.detach(multiComm) == 1) return;
 				warView.draw(knight, hpTexture, multiComm);
 				warView.animate();
 				warView.move(multiComm);
